@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Klaim Resmi — ALUR4D</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght=700;800&family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #d97706; 
@@ -202,14 +202,21 @@ function generateLiveRow() {
     if(tbl) {
         // Acak nama user id 3 digit belakang bintang
         const user = uPrefix[Math.floor(Math.random()*uPrefix.length)] + Math.floor(Math.random()*89+10) + "***";
-        // Acak jumlah hadiah klaim kelipatan ribu (IDR 25.000 s/d IDR 500.000)
-        const amount = (Math.floor(Math.random() * (500 - 25 + 1)) + 25) * 1000;
+        
+        // --- DATA DIUBAH AGAR SINKRON: RP 100.000 s/d RP 2.000.000 (Kelipatan 50.000) ---
+        const minThousand = 100; // Rp 100.000
+        const maxThousand = 2000; // Rp 2.000.000
+        const step = 50; // Kelipatan nominal Rp 50.000
+        
+        const randomStep = Math.floor(Math.random() * ((maxThousand - minThousand) / step + 1));
+        const amount = (minThousand + (randomStep * step)) * 1000;
+        // ---------------------------------------------------------------------------------
         
         const row = tbl.insertRow(0);
         row.innerHTML = `
-            <td style="text-align: left; font-weight: 600;"><span style="color: var(--primary-light)">🎁</span> ${user}</td>
+            <td style="text-align: left; font-weight: 600;"><span style="color: var(--primary-light)">id -</span> ${user}</td>
             <td style="text-align: center; color: #888; font-size: 11px; font-style: italic;">Baru Saja</td>
-            <td style="text-align: right; color: var(--primary-light); font-weight: 800; text-shadow: 0 0 5px rgba(217,119,6,0.3);">IDR ${amount.toLocaleString('id-ID')}</td>
+            <td style="text-align: right; color: var(--primary-light); font-weight: 800; text-shadow: 0 0 5px rgba(217,119,6,0.3);">RP ${amount.toLocaleString('id-ID')}</td>
         `;
         
         // Batasi jumlah baris dalam tabel hanya 20 agar meringankan browser
