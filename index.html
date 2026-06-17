@@ -54,7 +54,11 @@
 
         /* MODAL WINNER */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .modal-box { background: #0d0d0d; width: 92%; max-width: 380px; padding: 40px 25px 30px; border-radius: 35px; border: 1px solid var(--border); text-align: center; }
+        .modal-box { background: #0d0d0d; width: 92%; max-width: 380px; padding: 45px 25px 30px; border-radius: 35px; border: 1px solid var(--border); text-align: center; position: relative; }
+        
+        .close-modal-btn { position: absolute; top: 20px; right: 25px; font-size: 22px; font-weight: 700; color: rgba(255,255,255,0.4); cursor: pointer; transition: color 0.3s, transform 0.3s; line-height: 1; }
+        .close-modal-btn:hover { color: #fff; transform: scale(1.15); }
+
         .prize-display { background: linear-gradient(135deg, #1e1b18 0%, #0a0a0a 100%); border: 1px solid var(--border); padding: 20px; border-radius: 20px; margin: 20px 0; }
         .chat-btn { display: block; background: linear-gradient(135deg, var(--primary), #b45309); color: white; text-decoration: none; padding: 16px; border-radius: 14px; font-weight: 800; margin-top: 20px; text-transform: uppercase; font-size: 14px; }
 
@@ -65,9 +69,10 @@
 </head>
 <body>
 
-<div class="modal-overlay" id="prizeModal">
+<div class="modal-overlay" id="prizeModal" onclick="closeModalOutside(event)">
     <div class="modal-box">
-        <div style="font-size: 55px; margin-bottom: 5px;">🎉</div>
+        <div class="close-modal-btn" onclick="closeModal()">&times;</div>
+        <div style="font-size: 55px; margin-bottom: 5px;">𓆩👑𓆪</div>
         <h2 style="font-family: var(--font-head); color: var(--primary-light); font-size: 20px; text-transform: uppercase;">SELAMAT KLAIM SUKSES!</h2>
         <p style="color:#aaa; font-size:12px; margin-top:5px;">User ID Anda terverifikasi memenangkan hadiah harian:</p>
         <div class="prize-display">
@@ -84,11 +89,11 @@
     <div class="top-bar-content">
         <img src="https://i.imgur.com/p1VqfMj.png" class="top-bar-logo" alt="ALUR4D LOGO">
         <nav class="nav-menu">
-    <a href="lobby.html" class="nav-item">Lobby Utama</a>
-    <a href="daftar.html" class="nav-item">Daftar Akun</a>
-    <a href="index.html" class="nav-item">Mystery Box</a>
-    <a href="riwayat.html" class="nav-item">Riwayat Claim</a>
-    <a href="bantuan.html" class="nav-item">Bantuan Live</a>
+            <a href="lobby.html" class="nav-item">Lobby Utama</a>
+            <a href="daftar.html" class="nav-item">Daftar Akun</a>
+            <a href="index.html" class="nav-item">Mystery Box</a>
+            <a href="riwayat.html" class="nav-item">Riwayat Claim</a>
+            <a href="bantuan.html" class="nav-item">Bantuan Live</a>
         </nav>
     </div>
 </div>
@@ -110,23 +115,44 @@
 
 <script>
 function handleClaimForm(e) { e.preventDefault(); triggerClaim(); }
+
 function triggerClaim() {
-    const userInput = document.getElementById("userIdInput").value.trim();
+    const userInput = document.getElementById("userIdInput").value.trim().toUpperCase();
     if (userInput === "") { alert("Silakan masukkan User ID resmi Anda terlebih dahulu!"); return; }
+    
+    // --- SISTEM CEK ANTIDUPLIKASI (1 USER ID = 1 KALI CLAIM) ---
+    let claimedUsers = JSON.parse(localStorage.getItem("claimed_users")) || [];
+    if (claimedUsers.includes(userInput)) {
+        alert("Maaf, User ID '" + userInput + "' sudah pernah melakukan klaim Mystery Box hari ini!");
+        return;
+    }
+    // -----------------------------------------------------------
+
     const boxImage = document.getElementById("boxAnimate");
     boxImage.style.transform = "scale(1.1) rotate(5deg)";
     setTimeout(() => { boxImage.style.transform = "scale(1.1) rotate(-5deg)"; }, 100);
     setTimeout(() => { boxImage.style.transform = "scale(1.1) rotate(5deg)"; }, 200);
     setTimeout(() => {
         boxImage.style.transform = "scale(1)";
-        const prizes = [25000, 50000, 75000, 100000, 150000, 200000, 500000];
+        
+        // DAFTAR HADIAH BARU
+        const prizes = [100000, 200000, 350000, 500000, 750000, 1000000, 1500000, 2000000];
         const selectedPrize = prizes[Math.floor(Math.random() * prizes.length)];
+        
+        // --- SIMPAN USER KE DATA BLOCKED KLAIM ---
+        claimedUsers.push(userInput);
+        localStorage.setItem("claimed_users", JSON.stringify(claimedUsers));
+        // -----------------------------------------
+
         document.getElementById("winPrize").innerText = "IDR " + selectedPrize.toLocaleString('id-ID');
-        document.getElementById("winUser").innerText = "USER ID: " + userInput.toUpperCase();
+        document.getElementById("winUser").innerText = "USER ID: " + userInput;
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#d97706', '#ffffff', '#fbbf24'] });
         document.getElementById("prizeModal").style.display = "flex";
     }, 350);
 }
+
+function closeModal() { document.getElementById("prizeModal").style.display = "none"; }
+function closeModalOutside(e) { if (e.target.id === "prizeModal") { closeModal(); } }
 </script>
 </body>
 </html>
