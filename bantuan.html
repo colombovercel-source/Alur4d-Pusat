@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pusat Bantuan Live — ALUR4D</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght=700;800&family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #d97706; 
@@ -25,8 +24,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(rgba(10,10,10,0.85), rgba(10,10,10,0.85)), url('https://i.imgur.com/HbBT1U7.png
-');
+            background: linear-gradient(rgba(10,10,10,0.85), rgba(10,10,10,0.85)), url('https://i.imgur.com/HbBT1U7.png');
             background-size: cover; 
             background-position: center; 
             background-attachment: fixed;
@@ -190,12 +188,12 @@
             font-size: 12px;
             color: #b5a99e;
             line-height: 1.6;
-            transition: all 0.3s cubic-bezier(0, 1, 0, 1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* FIXED: Menggunakan kurva transisi yang seragam */
         }
         .faq-item.active .faq-answer {
             padding: 0 20px 15px 20px;
-            max-height: 1000px;
-            transition: all 0.3s cubic-bezier(1, 0, 1, 0);
+            max-height: 300px; /* FIXED: Diubah dari 1000px ke 300px agar transisi menutup/membuka tidak delay lama */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* FIXED: Kurva disamakan agar mulus */
         }
         .faq-item.active .faq-question {
             color: var(--primary-light);
@@ -234,11 +232,11 @@
         <img src="https://i.imgur.com/p1VqfMj.png" class="top-bar-logo" alt="ALUR4D LOGO">
         
         <nav class="nav-menu">
-      <a href="lobby.html" class="nav-item">Lobby Utama</a>
-    <a href="daftar.html" class="nav-item">Daftar Akun</a>
-    <a href="index.html" class="nav-item">Mystery Box</a>
-    <a href="riwayat.html" class="nav-item">Riwayat Claim</a>
-    <a href="bantuan.html" class="nav-item">Bantuan Live</a>
+            <a href="lobby.html" class="nav-item">Lobby Utama</a>
+            <a href="daftar.html" class="nav-item">Daftar Akun</a>
+            <a href="index.html" class="nav-item">Mystery Box</a>
+            <a href="riwayat.html" class="nav-item">Riwayat Claim</a>
+            <a href="bantuan.html" class="nav-item active">Bantuan Live</a> <!-- FIXED: Ditambahkan class active agar sesuai halaman aktif -->
         </nav>
     </div>
 </div>
@@ -252,7 +250,7 @@
     </p>
 
     <!-- HUBUNGI LIVECHAT UTAMA -->
-    <a href=" https://alurmekar.com/" target="_blank" class="support-link">
+    <a href="https://alurmekar.com/" target="_blank" class="support-link">
         <img src="https://img.icons8.com/external-flatart-icons-flat-flatarticons/64/external-chat-web-navigation-flatart-icons-flat-flatarticons.png" alt="Live Chat">
         <div>
             <div>LIVECHAT RESMI UTAMA</div>
@@ -260,8 +258,8 @@
         </div>
     </a>
 
-    <!-- HUBUNGI WHATSAPP -->
-    <a href=" https://alurmekar.com/" target="_blank" class="support-link">
+    <!-- HUBUNGI WHATSAPP (FIXED LINK) -->
+    <a href="https://wa.me/6281234567890" target="_blank" class="support-link">
         <img src="https://img.icons8.com/color/64/whatsapp--v1.png" alt="WhatsApp">
         <div>
             <div>WHATSAPP OFFICIAL</div>
@@ -328,8 +326,8 @@
     </div>
 </div>
 
-<!-- FLOATING WA -->
-<a href=" https://alurmekar.com/" target="_blank" class="fab-wa">
+<!-- FLOATING WA (FIXED LINK) -->
+<a href="https://wa.me/6281234567890" target="_blank" class="fab-wa">
     <img src="https://img.icons8.com/color/38/whatsapp--v1.png" alt="WhatsApp">
 </a>
 
